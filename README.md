@@ -4,9 +4,8 @@ Telegram bot for downloading music from youtube and other sites built on FFmpeg 
 
 ## Requirements
 
-- aiogram
-- youtube-dl
 - ffmpeg
+- Python 3
 
 ## Installing
 
