@@ -16,5 +16,5 @@ Telegram bot for downloading music from youtube and other sites built on FFmpeg 
    - It should look like this: `BOT_TOKEN=token`
 4. Run `$ python3 app.py`
 
-======
+## Description
 Telegram bot which allows you to convert videos to mp3 files. Works with most sites, can download YouTube playlists, split large audio files into pieces to overcome api limit.
