@@ -1,6 +1,6 @@
 # ytm3bot
 
-Telegram bot for downloading music from youtube and other sites built on FFmpeg and youtube-dl.
+Telegram bot for downloading audios from YouTube and other sites. Built on FFmpeg and youtube-dl. It allows you to convert videos to mp3 files. Works with most sites, can download YouTube playlists, split large audio files into pieces to overcome api limit.
 
 ## Requirements
 
@@ -17,6 +17,3 @@ Telegram bot for downloading music from youtube and other sites built on FFmpeg 
    - Arch: `pacman -S ffmpeg`
    - Ubuntu: `apt intall ffmpeg`
 5. Run `$ python3 app.py`
-
-## Description
-Telegram bot which allows you to convert videos to mp3 files. Works with most sites, can download YouTube playlists, split large audio files into pieces to overcome api limit.
