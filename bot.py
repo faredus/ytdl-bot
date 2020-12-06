@@ -42,6 +42,7 @@ async def display_help(message: Message):
         "Just send a link (for YouTube, you can do that via @vid)\n"
         "Note: It can only send files with size up to <b>50 MB</b>.\n"
         "You can decrease file size by choosing lower bit rate."
+        "UPD: It now splits audio files when they're too big."
     )
 
 
