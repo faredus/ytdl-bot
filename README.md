@@ -1,6 +1,6 @@
-# ytm3bot
+# ytdl-bot
 
-Telegram bot for audio downloading. Built on FFmpeg and youtube-dl. Works with most sites, can download YouTube playlists, split large audio files into pieces to overcome api limit.
+Telegram bot for audio downloading. Built on FFmpeg and youtube-dl. Works with most sites, can download YouTube playlists, split large audio files into pieces to overcome Bot api limit.
 
 ## Requirements
 
