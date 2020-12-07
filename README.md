@@ -5,7 +5,7 @@ Telegram bot for audio downloading. Built on FFmpeg and youtube-dl. Works with m
 ## Requirements
 
 - ffmpeg
-- Python 3
+- Python 3.7
 
 ## Installing
 
