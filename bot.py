@@ -1,5 +1,8 @@
+import asyncio
 import os
+from dotenv import load_dotenv
 
+from pyrogram import Client
 from aiogram import Bot, Dispatcher
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.dispatcher import FSMContext
@@ -13,16 +16,18 @@ from aiogram.types import (
 )
 from aiogram.utils.callback_data import CallbackData
 from aiogram.utils.exceptions import NetworkError
-from dotenv import load_dotenv
 from validator_collection import checkers
 
 from downloader import handle_playlist, download
-from splitter import split_audio
 
 load_dotenv()
 TOKEN = os.getenv("BOT_TOKEN")
+API_ID = os.getenv("API_ID")
+API_HASH = os.getenv("API_HASH")
+
 bot = Bot(TOKEN)
 dp = Dispatcher(bot, storage=MemoryStorage())
+app = Client("my_account", API_ID, API_HASH)
 
 callback = CallbackData("options", "codec", "bit_rate")
 
@@ -40,12 +45,10 @@ async def display_help(message: Message):
         "- Download YouTube playlists.\n"
         "- Convert audio files to different formats.\n\n"
         "Just send a link (for YouTube, you can do that via @vid)\n"
-        "Note: It can only send files with size up to <b>50 MB</b>.\n"
-        "You can decrease file size by choosing lower bit rate."
     )
 
 
-async def get_keyboard():
+def get_keyboard():
     markup = InlineKeyboardMarkup()
     markup.row(
         InlineKeyboardButton(
@@ -67,12 +70,16 @@ async def get_keyboard():
     return markup
 
 
+async def send_audio(chat_id, audio, title):
+    await app.send_audio(chat_id=chat_id, audio=audio, title=title)
+
+
 @dp.message_handler(state="*")
 async def handle_url(message: Message, state: FSMContext):
     if checkers.is_url(message.text):
         await States.url.set()
         await state.update_data(url=message.text)
-        markup = await get_keyboard()
+        markup = get_keyboard()
         await message.answer("Options:", reply_markup=markup)
     else:
         await message.answer("Invalid link.")
@@ -90,23 +97,17 @@ async def inline_options(call: CallbackQuery, callback_data: dict, state: FSMCon
             tracks = handle_playlist(url)
             for t in tracks:
                 title = download(t, callback_data)
-                await call.message.answer_audio(audio=open(filename, "rb"), title=title)
+                await send_audio(call.message.chat.id, open(filename, "rb"), title)
         else:
-            title = download(url, callback_data)
-            await call.message.answer_audio(audio=open(filename, "rb"), title=title)
+            title = await download(url, callback_data)
+            await send_audio(call.message.chat.id, open(filename, "rb"), title)
         os.remove(filename)
-
-    except NetworkError:
-        await call.message.edit_text("File is too large for uploading. Splitting...")
-        chunks = split_audio(filename)
-        await call.message.edit_text("Success. Uploading...")
-        for i, file in enumerate(chunks, 1):
-            await call.message.answer_audio(
-                audio=open(file, "rb"), title=f"({i}) {title}"
-            )
-            os.remove(file)
     except:
-        await call.message.edit_text("Something went wrong.")
-
+        await call.message.edit_text("Something went wrong...")
     finally:
         await state.finish()
+
+
+
+
+
