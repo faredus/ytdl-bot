@@ -11,7 +11,9 @@ Telegram bot for audio downloading. Built on FFmpeg and youtube-dl. Works with m
 
 1. `$ git clone https://github.com/ess3nt1al/ytdl-bot`
 2. `$ pip install -r requirements.txt`
-3. Put your Telegram bot token, api id, api hash into `.env`
+3. Put your Bot token, API id, API hash into `.env`
+   * Bot token: create a bot using @BotFather and copy the token
+   * API ID & HASH: create an app at https://my.telegram.org/apps and copy them
 4. Make sure you have ffmpeg installed.
    - Arch: `pacman -S ffmpeg`
    - Ubuntu: `apt intall ffmpeg`
