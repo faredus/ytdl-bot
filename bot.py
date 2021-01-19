@@ -27,7 +27,7 @@ API_HASH = os.getenv("API_HASH")
 
 bot = Bot(TOKEN)
 dp = Dispatcher(bot, storage=MemoryStorage())
-app = Client("my_account", API_ID, API_HASH)
+app = Client("my_bot", API_ID, API_HASH, bot_token=TOKEN)
 
 callback = CallbackData("options", "codec", "bit_rate")
 
